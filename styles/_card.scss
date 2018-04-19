@@ -1,0 +1,8 @@
+.card {
+  @include card-shadow(1);
+  transition: box-shadow .5s;
+
+  @include hover-focus {
+    @include card-shadow(5);
+  }
+}

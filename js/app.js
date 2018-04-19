@@ -1,6 +1,5 @@
 import 'jquery';
 import 'popper.js';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/style.css';
+import '../fonts/themify-icons.css';
+import '../styles/style.scss';
 

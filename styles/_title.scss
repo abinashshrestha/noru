@@ -1,0 +1,32 @@
+.title {
+  $title-color: $primary;
+
+  color: $title-color;
+  padding: 0 0 1rem;
+  position: relative;
+  text-align: center;
+
+  &--border {
+
+    &::after {
+      bottom: 0;
+      background-color: $title-color;
+      content: '';
+      display: block;
+      height: .2rem;
+      left: 50%;
+      position: absolute;
+      transform: translateX(-50%);
+      width: 3rem;
+    }
+  }
+
+  &--left {
+    text-align: left;
+
+    &.title--border::after {
+      left: 0;
+      transform: translateX(0);
+    }
+  }
+}
