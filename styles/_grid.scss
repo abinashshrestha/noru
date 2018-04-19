@@ -1,0 +1,5 @@
+.container-lg {
+  @include make-container();
+
+  max-width: map-get($container-max-widths, 'lg');
+}

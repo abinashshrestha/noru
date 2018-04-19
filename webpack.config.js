@@ -96,6 +96,18 @@ module.exports = {
                     // use style-loader in development
                     fallback: "style-loader"
                 })*/
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    'file-loader'
+                ]
+            },
+            {
+                test: /\.(eot|otf|woff|woff2|ttf|svg)(\?\S*)?$/,
+                use: [
+                    'file-loader'
+                ]
             }
         ]
     }
