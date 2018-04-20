@@ -19,7 +19,16 @@ get_header();
             </div>
         </div>
     </section>
-    <section class="bg-light py-7">
+    <style type="text/css">
+        .brands-showcase {
+            background-image: url("<?php echo get_template_directory_uri() . '/images/Wave-front.svg' ?>"),
+            url("<?php echo get_template_directory_uri() . '/images/wave-back.svg' ?>");
+            background-repeat: no-repeat;
+            background-position: bottom;
+
+        }
+    </style>
+    <section class="py-7 brands-showcase">
         <div class="container container-lg">
             <h1 class="title title--border">Our Brands</h1>
             <article class="row justify-content-center">

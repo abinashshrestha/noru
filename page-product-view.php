@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Template Name: Product Main
+ * Template Name: Product View Page
  *
  * @package Noru
  *

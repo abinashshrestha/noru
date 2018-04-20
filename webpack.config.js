@@ -79,9 +79,11 @@ module.exports = {
                 use: [{
                     loader: "style-loader" // creates style nodes from JS strings
                 }, {
-                    loader: "css-loader" // translates CSS into CommonJS
+                    loader: "css-loader?sourceMap" // translates CSS into CommonJS
                 }, {
-                    loader: "sass-loader" // compiles Sass to CSS
+                    loader: "postcss-loader?sourceMap" // compiles PostCSS to CSS
+                }, {
+                    loader: "sass-loader?sourceMap" // compiles Sass to CSS
                 }]
 
                 /*use: extractSass.extract({
@@ -100,13 +102,20 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            fallback: 'file-loader',
+                            limit: 8192,
+                            name: 'images/[name]-[hash].[ext]'
+                        }
+                    }
                 ]
             },
             {
                 test: /\.(eot|otf|woff|woff2|ttf|svg)(\?\S*)?$/,
                 use: [
-                    'file-loader'
+                    'url-loader'
                 ]
             }
         ]

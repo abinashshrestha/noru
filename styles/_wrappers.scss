@@ -1,3 +1,54 @@
+.brands-showcase {
+  background-color: $light;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 .contact-box {
   min-height: 200px;
+}
+
+.brand-logo {
+  @include img-fluid();
+
+  max-width: 300px;
+}
+
+.page-banner {
+  background-color: $gray-400;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: auto;
+  min-height: 400px;
+  position: relative;
+  width: 100%;
+
+  &::before {
+    @include gradient-y(transparent, rgba($black, .7), 50%, 100%);
+
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  &__content {
+    bottom: 0;
+    display: block;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.company-logo {
+  @include img-fluid();
+
+  @include media-breakpoint-down(sm) {
+    max-width: 150px;
+    margin: 0 0 2rem;
+  }
 }
