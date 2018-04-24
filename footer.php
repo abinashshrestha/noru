@@ -8,7 +8,7 @@
  *
  * @package Noru
  */
-
+global $region, $productLines;
 ?>
 
 </div><!-- #content -->
@@ -42,21 +42,11 @@
             <div class="col-12 col-sm-6 col-lg-3 my-3">
                 <h4>Brands</h4>
                 <ul class="nav flex-column">
+                <?php foreach($productLines as $productLine):?>
                     <li class="nav-item">
-                        <a href="#" class="text-muted">Audisol</a>
+                        <a href="<?php echo get_permalink($productLine->ID);?>" class="text-muted"><?php echo $productLine->post_title;?></a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="text-muted">Klear</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="text-muted">Pronail</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="text-muted">Snorel</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="text-muted">Wartfree</a>
-                    </li>
+<?php endforeach;?>
                 </ul>
             </div>
             <style type="text/css">
@@ -70,16 +60,16 @@
                 <ul class="nav flex-column text-muted">
                     <li class="nav-item">
                         <p>
-                            1300 843 784<br>
-                            <a href="mailto:info@noru.com.au">info@noru.com.au</a>
+                        <?php $address = get_post_meta($region->ID, 'address', true);?>
+                        <?php $email = get_post_meta($region->ID, 'email', true);?>
+                        <?php $phoneNumber = get_post_meta($region->ID, 'phone_number', true);?>
+                        <?php echo $phoneNumber;?><br>
+                            <a href="mailto:<?php echo $email;?>"><?php echo $email;?></a>
                         </p>
                         <hr>
                     </li>
                     <li class="nav-item">
-                        <p>Noru Pharma<br>
-                           Unit 10, 50 Victoria Road,<br>
-                           Drummoyne, NSW 2047,<br>
-                           Australia</p>
+                        <p><?php echo $address;?></p>
                     </li>
                 </ul>
             </div>

@@ -7,6 +7,11 @@
  * @package Noru
  */
 
+include 'includes/CustomContent.php';
+include 'includes/NewGeneralSetting.php';
+
+add_image_size('brand-full', 800, 429);// Used for donors listing in home page
+
 if ( ! function_exists( 'noru_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -175,3 +180,134 @@ if ( ! file_exists( get_template_directory() . '/class-wp-bootstrap-navwalker.ph
 register_nav_menus( array(
     'primary' => __( 'Primary Menu', 'noru' ),
 ) );
+
+
+$weight = 50;
+$content_types = array(
+		array(
+				'machine_name' => 'articles',
+				'single_name' => 'article',
+				'dashicon' => 'dashicons-welcome-write-blog',
+				'menu_position' => $weight,
+		),
+		array(
+				'machine_name' => 'sliders',
+				'single_name' => 'slider',
+				'dashicon' => 'dashicons-images-alt2',
+				'menu_position' => $weight++,
+		),
+		array(
+				'machine_name' => 'regions',
+				'single_name' => 'region',
+				'dashicon' => 'dashicons-location',
+				'menu_position' => $weight++,
+		),
+		array(
+				'machine_name' => 'product-lines',
+				'single_name' => 'product-line',
+				'dashicon' => 'dashicons-networking',
+				'menu_position' => $weight++,
+		),
+		array(
+				'machine_name' => 'products',
+				'single_name' => 'product',
+				'dashicon' => 'dashicons-products',
+				'menu_position' => $weight++,
+		),
+		array(
+				'machine_name' => 'company-goals',
+				'single_name' => 'company-goal',
+				'dashicon' => 'dashicons-groups',
+				'menu_position' => $weight++,
+		),
+		array(
+				'machine_name' => 'landing-pages',
+				'single_name' => 'landing-page',
+				'dashicon' => 'dashicons-welcome-add-page',
+				'menu_position' => $weight++,
+		),
+		array(
+			'machine_name' => 'health-issues',
+			'single_name' => 'health-issue',
+			'dashicon' => 'dashicons-plus-alt',
+			'menu_position' => $weight++,
+		),
+		array(
+			'machine_name' => 'product-features',
+			'single_name' => 'product-feature',
+			'dashicon' => 'dashicons-yes',
+			'menu_position' => $weight++,
+		),
+
+
+);
+//adding custom post types
+foreach ($content_types as $key => $content_type) {
+	$contenttypeSetup = new CustomContent($content_type);
+}
+
+$fields = array(
+			array(
+				'name' => 'Google Map Api Key',
+				'type' => 'text',
+				'id' => 'google_map_api_key',
+				'machine_name' => 'google_map_api_key',
+				'machine_name_field' => 'google_map_api_key_field',
+		),
+		array(
+				'name' => 'Facebook',
+				'type' => 'text',
+				'id' => 'facebook_url',
+				'machine_name' => 'facebook_url',
+				'machine_name_field' => 'facebook_url_field',
+		),
+		array(
+				'name' => 'Vimeo',
+				'type' => 'text',
+				'id' => 'vimeo_url',
+				'machine_name' => 'vimeo_url',
+				'machine_name_field' => 'vimeo_url_field',
+		),
+		array(
+				'name' => 'Youtube',
+				'type' => 'text',
+				'id' => 'youtube_url',
+				'machine_name' => 'youtube_url',
+				'machine_name_field' => 'youtube_url_field',
+		),
+);
+
+foreach ($fields as $field) {
+	$fieldSetup = new NewGeneralSetting($field);
+}
+
+function getPostByRelation($postType, $relationId) {
+	return get_posts([
+		'post_type' => $postType,
+		'meta_query'	=> array(
+		  'relation'		=> 'AND',
+		  array(
+			'key'		=> 'available_regions',
+			'value'		=> '"' . $relationId . '"',
+			'compare'	=> 'LIKE'
+		  ),
+		),
+	  ]);
+}
+
+// Function to truncate string with respect to word
+function text_truncate($string, $start, $length = NULL)
+{
+    $string_length = strlen($string);
+    if ($length) {
+        if ($string_length > $length) {
+            $truncated_text = substr($string, $start, $length) . '...';
+            return $truncated_text;
+        } else {
+            return $string;
+        }
+    } else {
+        return $string;
+    }
+}
+

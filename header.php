@@ -45,4 +45,14 @@
             ?>
         </nav>
     </header>
+    <?php
+    global $region;
+    $siteUrl =  get_site_url();
+// Get region using the domain
+$region = get_posts([
+  'post_type' => 'regions',
+  'meta_key' => 'domain_name',
+  'meta_value' => $siteUrl
+])[0];
+?>
     <div id="content" class="site-content">
