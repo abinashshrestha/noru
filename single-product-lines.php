@@ -16,136 +16,132 @@ get_header();
     <section class="bg-light py-7">
         <div class="container">
             <div class="row align-items-stretch">
+<?php
+$products = get_posts([
+    'post_type' => 'products',
+    'meta_query'	=> array(
+      'relation'		=> 'AND',
+      array(
+        'key'		=> 'product_line',
+        'value'		=> '"' . $post->ID . '"',
+        'compare'	=> 'LIKE'
+      ),
+      array(
+        'key'		=> 'available_regions',
+        'value'		=> '"' . $region->ID . '"',
+        'compare'	=> 'LIKE'
+      ),
+    ),
+]);
+if($products):
+    foreach($products as $product):
+?>
+
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="text-center py-4 px-4">
-                                <img src="<?php echo get_template_directory_uri() . '/images/Audisol_Ear_Cleansing-Spray.png' ?>"
-                                     class="img-fluid" alt="">
+                            <?php
+                            $image_url = wp_get_attachment_image_src(get_post_thumbnail_id($product->ID), 'detail-image');
+                            if ($image_url){
+                                ?>
+                                <img src="<?php echo $image_url[0]; ?>"
+                                     class="img-fluid" alt="<?php echo $product->post_title;?>">
+                            <?php }?>
                             </div>
-                            <h4 class="card-title text-primary">Dry Ears</h4>
-                            <ul class="px-3 m-0">
-                                <li>Pain relief from trapped water.</li>
-                                <li>Relief from the symptoms of swimmer’s ear.</li>
-                                <li>Quickly dry’s excess moisture</li>
-                            </ul>
+                            <h4 class="card-title text-primary"><?php echo $product->post_title;?></h4>
+                            <?php echo $product->post_content;?>
                         </div>
                         <div class="card-body text-right">
-                            <a href="#" class="card-link">Learn More <span class="ti-arrow-circle-right"></span></a>
+                            <a target="_blank" href="<?php echo get_post_permalink($product->ID);?>" class="card-link">Learn More <span class="ti-arrow-circle-right"></span></a>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="text-center py-4 px-4">
-                                <img src="<?php echo get_template_directory_uri() . '/images/Audisol_Ear_Cleansing-Spray.png' ?>"
-                                     class="img-fluid" alt="">
-                            </div>
-                            <h4 class="card-title text-primary">Cleansing Spray</h4>
-                            <ul class="px-3 m-0">
-                                <li>Gently free ears from wax.</li>
-                                <li>Natural, non-medicated relief.</li>
-                                <li>Suitable for children 6years+</li>
-                            </ul>
-                        </div>
-                        <div class="card-body text-right">
-                            <a href="#" class="card-link">Learn More <span class="ti-arrow-circle-right"></span></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="text-center py-4 px-4">
-                                <img src="<?php echo get_template_directory_uri() . '/images/Audisol_Ear_Cleansing-Spray.png' ?>"
-                                     class="img-fluid" alt="">
-                            </div>
-                            <h4 class="card-title text-primary">Pain Relief</h4>
-                            <ul class="px-3 m-0">
-                                <li>Pain relief from trapped water.</li>
-                                <li>Relief from the symptoms of swimmer’s ear.</li>
-                                <li>Quickly dry’s excess moisture</li>
-                            </ul>
-                        </div>
-                        <div class="card-body text-right">
-                            <a href="#" class="card-link">Learn More <span class="ti-arrow-circle-right"></span></a>
-                        </div>
-                    </div>
-                </div>
+
+<?php endforeach; endif;?>
             </div>
         </div>
     </section>
     <section class="py-7">
         <div class="container container-lg">
-            <h2 class="title title--left">What is ear wax?</h2>
-            <p>Ear wax or cerumen is a normal secretion of the glands in the ear. However excessive ear wax may cause a
-               number of unwanted effects including hearing loss, discomfort, pain and coughing.</p>
+            <h2 class="title title--left"><?php echo $post->post_excerpt;?></h2>
+           <?php echo $post->post_content;?>
         </div>
         <div class="container mt-7">
             <div class="row">
+            <?php
+$healthIssues = get_posts([
+    'post_type' => 'health-issues',
+    'meta_query'	=> array(
+      'relation'		=> 'AND',
+      array(
+        'key'		=> 'product_line_association',
+        'value'		=> '"' . $post->ID . '"',
+        'compare'	=> 'LIKE'
+      ),
+    ),
+]);
+if($healthIssues):
+    foreach($healthIssues as $healthIssue):
+?>
+
+
                 <div class="col-12 col-md-6 col-lg-4">
-                    <img class="img-fluid" src="<?php echo get_template_directory_uri() . '/images/hearing-loss.jpg' ?>"
+                <?php
+                            $image_url = wp_get_attachment_image_src(get_post_thumbnail_id($healthIssue->ID), 'detail-image');
+                            if ($image_url){
+                                ?>
+                    <img class="img-fluid" src="<?php echo $image_url[0];?>"
                          alt="">
-                    <h4 class="title title--left my-4 p-0">Hearing Loss</h4>
-                    <p>Hearing loss occurs when accumulated wax occludes (blocks) the ear canal, reducing or preventing
-                       sound waves from easily reaching the eardrum.</p>
+                            <?php } ?>
+                    <h4 class="title title--left my-4 p-0"><?php echo $healthIssue->post_title;?></h4>
+                    <p><?php echo $healthIssue->post_content;?></p>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <img class="img-fluid" src="<?php echo get_template_directory_uri() . '/images/ear-pain.jpg' ?>"
-                         alt="">
-                    <h4 class="title title--left my-4 p-0">Ear Pain</h4>
-                    <p>Discomfort or pain may be evident in cases where compressed wax pressures the ear drum.</p>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <img class="img-fluid" src="<?php echo get_template_directory_uri() . '/images/coughing.jpg' ?>"
-                         alt="">
-                    <h4 class="title title--left my-4 p-0">Coughing</h4>
-                    <p>Coughing may occur in cases where the impacted wax stimulates nerves shared both by the ear canal
-                       and throat, provoking a tickle in the throat which may lead to cough.</p>
-                </div>
+
+    <?php endforeach; endif; ?>
+
+
             </div>
         </div>
     </section>
     <section class="bg-light py-7">
         <div class="container container-lg">
+        <?php
+$productFeatures = get_posts([
+    'post_type' => 'product-features',
+    'meta_query'	=> array(
+      'relation'		=> 'AND',
+      array(
+        'key'		=> 'product_line_association',
+        'value'		=> '"' . $post->ID . '"',
+        'compare'	=> 'LIKE'
+      ),
+    ),
+]);
+if($productFeatures):
+    foreach($productFeatures as $productFeature):
+?>
+
             <div class="bg-white p-5">
                 <div class="row">
                     <div class="col-12 col-md-6">
+                    <?php
+                            $image_url = wp_get_attachment_image_src(get_post_thumbnail_id($productFeature->ID), 'feature-square');
+                            if ($image_url){
+                                ?>
                         <img class="align-self-center img-fluid"
-                             src="<?php echo get_template_directory_uri() . '/images/map.jpg' ?>"
-                             alt="Generic placeholder image">
+                             src="<?php echo $image_url[0]; ?>"
+                             alt="<?php echo $productFeature->post_title?>">
+                            <?php }?>
                     </div>
                     <div class="col-12 col-md-6">
-                        <h2 class="title title--left mt-3">How can the Audisol range of products help?</h2>
-                        <p>Each one of our ear care products can help you to gain fast effective relief from symptoms
-                           associated with excessive ear wax build up and help to maintain healthy ears leaving you free
-                           from pain and discomfort.</p>
+                        <h2 class="title title--left mt-3"><?php echo $productFeature->post_title;?></h2>
+                        <p><?php echo $productFeature->post_content;?></p>
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-5 mt-5">
-                <div class="row flex-column-reverse flex-md-row">
-                    <div class="col-12 col-md-6">
-                        <h2 class="title title--left mt-3">Causes of Ear Wax Production</h2>
-                        <ul class="px-3 m-0">
 
-                            <li>You just have more wax in your ears (some people naturally do)</li>
-                            <li>You have hairy or narrow canals (the tubes that link the eardrum and outer ear)</li>
-                            <li>Age - wax gets harder and more difficult to fall out naturally</li>
-                            <li>Wearing hearing aids, earplugs and other things you put in your ear – These can lead to
-                                excessive production of ear wax and push the wax further into the ear making it
-                                difficult for it to fall out naturally.
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <img class="align-self-center img-fluid"
-                             src="<?php echo get_template_directory_uri() . '/images/map.jpg' ?>"
-                             alt="Generic placeholder image">
-                    </div>
-                </div>
-            </div>
+    <?php endforeach; endif;?>
         </div>
     </section>
 

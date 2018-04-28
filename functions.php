@@ -13,6 +13,8 @@ include 'includes/My_Walker_Nav_Menu.php';
 
 add_image_size('brand-full', 800, 429);// Used for brand listing in home page
 add_image_size('detail-image', 256, 256);
+add_image_size('product-image', 262, 262);
+add_image_size('feature-square', 402, 365);
 
 if ( ! function_exists( 'noru_setup' ) ) :
 	/**
