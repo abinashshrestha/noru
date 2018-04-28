@@ -11,25 +11,7 @@ get_header();
 global $region;
 ?>
 
-<?php
 
-global $productLines;
-
-$products = getPostByRelation('products', $region->ID);
-
-$productLineIds = [];
-foreach($products as $product) {
-  $productLineId = get_post_meta($product->ID, 'product_line', true);
-  $productLineIds[$productLineId[0]] = $productLineId[0];
-}
-$args = array(
-  'post_type' => 'product-lines', 
-  'post__in' => $productLineIds
-);
-
-$productLines = get_posts($args);
-
-?>
 
   <section id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">

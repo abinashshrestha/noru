@@ -29,20 +29,11 @@
             <a class="navbar-brand h1 m-0 mr-auto" href="#">
                 <img class="d-inline-block align-middle mr-2" src="<?php echo get_template_directory_uri() . '/images/Noru_Logo-favicon.png' ?>"
                      style="height: 50px; width: auto; max-width: 100%;" class="d-inline-block align-top" alt="">
-                Noru Pharma
+                <?php echo get_bloginfo('name');?>
             </a>
-            <?php
-            wp_nav_menu(array(
-                'theme_location' => 'primary',
-                'depth' => 2,
-                'container' => 'div',
-                'container_class' => '',
-                'container_id' => 'bs-example-navbar-collapse-1',
-                'menu_class' => 'navbar-nav',
-                'fallback_cb' => 'WP_Bootstrap_Navwalker::fallback',
-                'walker' => new WP_Bootstrap_Navwalker()
-            ));
-            ?>
+            <?php getHeaderMenu('');?>
+
+
         </nav>
     </header>
     <?php
@@ -54,5 +45,22 @@ $region = get_posts([
   'meta_key' => 'domain_name',
   'meta_value' => $siteUrl
 ])[0];
+
+global $productLines;
+
+$products = getPostByRelation('products', $region->ID);
+
+$productLineIds = [];
+foreach($products as $product) {
+  $productLineId = get_post_meta($product->ID, 'product_line', true);
+  $productLineIds[$productLineId[0]] = $productLineId[0];
+}
+$args = array(
+  'post_type' => 'product-lines', 
+  'post__in' => $productLineIds
+);
+
+$productLines = get_posts($args);
+
 ?>
     <div id="content" class="site-content">

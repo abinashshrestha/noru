@@ -1,40 +1,79 @@
 <?php
 /**
- * The template for displaying all pages
  *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site may use a
- * different template.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * Template Name: About Page
  *
  * @package Noru
+ *
  */
 
 get_header();
+global $region;
 ?>
+    <style type="text/css">
+        .page-bg {
+            background: #333 url(<?php echo get_template_directory_uri() . '/images/Noru-Banner-2.jpg' ?>) no-repeat;
+            width: 100%;
+            height: auto;
+            min-height: 400px;
+            position: relative;
+        }
 
-    <div id="primary" class="content-area">
-        <main id="main" class="site-main">
+        .page-bg > header {
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+        }
 
-            <?php
-            while ( have_posts() ) :
-                the_post();
 
-                get_template_part( 'template-parts/content', 'page' );
+    </style>
 
-                // If comments are open or we have at least one comment, load up the comment template.
-                if ( comments_open() || get_comments_number() ) :
-                    comments_template();
-                endif;
-
-            endwhile; // End of the loop.
-            ?>
-
-        </main><!-- #main -->
-    </div><!-- #primary -->
+    <div id="primary" class="mb-5">
+    <main id="main" class="site-main">
 
 <?php
-get_sidebar();
+while (have_posts()) :
+    the_post(); ?>
+    <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+        <div class="page-bg">
+            <header>
+                <div class="container py-4 text-white">
+                    <?php the_title('<h1>', '</h1>'); ?>
+                </div>
+            </header><!-- .entry-header -->
+        </div>
+
+        <div class="container my-7">
+            <div class="row d-flex flex-column-reverse flex-md-row">
+                <div class="col-12 col-md-7">
+<?php echo $post->post_content;?>
+                </div>
+                <div class="col-12 col-md-5 text-center">
+                <?php
+                            $image_url = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'detail-image');
+                            if (has_post_thumbnail()){
+                                ?>
+                    <img src="<?php echo $image_url[0]; ?>"
+                         class="img-fluid" alt="<?php echo $post->post_title;?>">
+                            <?php } ?>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    </main><!-- #main -->
+
+    </div><!-- #primary -->
+    <!-- #post-<?php the_ID();
+
+    // If comments are open or we have at least one comment, load up the comment template.
+    if (comments_open() || get_comments_number()) :
+        comments_template();
+    endif;
+
+endwhile; // End of the loop.
+?>
+
+    <?php
 get_footer();
+?>

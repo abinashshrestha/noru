@@ -22,22 +22,16 @@ global $region, $productLines;
                      style="max-width:200px;"
                 >
             </div>
+
             <div class="col-12 col-sm-6 col-lg-3 my-3">
                 <h4>About Us</h4>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a href="#" class="text-muted">Articles</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="text-muted">Company</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="text-muted">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="text-muted">Home</a>
-                    </li>
-                </ul>
+                <?php
+                        //arg[0] = MENU NAME
+                        //arg[1] = UL CLASS
+                        //arg[2] = SUB MENU UL CLASS
+                        //arg[3] = APPEND ELEMENT TO PARENT
+                        get_menu('Footer Menu', 'nav flex-column', ['nav-item'], '');
+                        ?>
             </div>
             <div class="col-12 col-sm-6 col-lg-3 my-3">
                 <h4>Brands</h4>
@@ -78,7 +72,7 @@ global $region, $productLines;
 </footer><!-- #colophon -->
 <section class="bg-light py-4">
     <p class="text-muted text-center m-0">
-        Copyright 2017 Noru Pharma. All Rights Reserved.
+        Copyright <?php echo date('Y');?> Noru Pharma. All Rights Reserved.
     </p>
 </section>
 </div><!-- #page -->

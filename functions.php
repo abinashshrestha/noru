@@ -9,8 +9,10 @@
 
 include 'includes/CustomContent.php';
 include 'includes/NewGeneralSetting.php';
+include 'includes/My_Walker_Nav_Menu.php';
 
-add_image_size('brand-full', 800, 429);// Used for donors listing in home page
+add_image_size('brand-full', 800, 429);// Used for brand listing in home page
+add_image_size('detail-image', 256, 256);
 
 if ( ! function_exists( 'noru_setup' ) ) :
 	/**
@@ -309,5 +311,49 @@ function text_truncate($string, $start, $length = NULL)
     } else {
         return $string;
     }
+}
+
+function get_menu($menuName, $ulclasses, $subulclasses, $append)
+{
+    $defaults = array(
+        'theme_location' => '',
+        'menu' => $menuName,
+        'container' => 'div',
+        'container_class' => '',
+        'container_id' => '',
+        'menu_class' => 'menu',
+        'menu_id' => '',
+        'echo' => true,
+        'fallback_cb' => 'wp_page_menu',
+        'before' => '',
+        'after' => '',
+        'link_before' => '',
+        'link_after' => '',
+        'items_wrap' => '<ul id="%1$s" class="%2$s ' . $ulclasses . ' ">%3$s' . $append . '</ul>',
+        'depth' => 0,
+        'walker' => new My_Walker_Nav_Menu(array('subulclasses' => $subulclasses)),
+    );
+	wp_nav_menu($defaults);
+}
+
+function getHeaderMenu($subulclasses) {
+	$defaults = array(
+		'theme_location' => 'primary',
+		'menu' => 'Header menu',
+		'container' => 'div',
+		'container_class' => '',
+		'container_id' => 'bs-example-navbar-collapse-1',
+		'menu_class' => 'navbar-nav',
+		'menu_id' => '',
+		'echo' => true,
+		'fallback_cb' => 'wp_page_menu',
+		'before' => '',
+		'after' => '',
+		'link_before' => '',
+		'link_after' => '',
+		'depth' => 2,
+		'walker' => new My_Walker_Nav_Menu(array('subulclasses' => $subulclasses)),
+	);
+	wp_nav_menu($defaults);
 }
 
